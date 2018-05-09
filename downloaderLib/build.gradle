@@ -1,0 +1,43 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdk
+    buildToolsVersion rootProject.ext.buildTools
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdk
+        targetSdkVersion rootProject.ext.targetSdk
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+   lintOptions {
+       abortOnError false
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile "com.android.support:appcompat-v7:${rootProject.ext.support}"
+    // okhttp
+    compile 'com.squareup.okhttp3:okhttp:3.3.0'
+}
+//打包任务
+task makeJar(type:org.gradle.api.tasks.bundling.Jar){
+    //指定生成的jar名
+    baseName 'downloaderlib'
+    //从哪打包的clasees文件
+    from('build/intermediates/classes/debug/com/dl7/downloaderlib')
+    //打包到jar后的目录结构位置
+    into('com/dl7/downloaderlib/')
+    //去掉不需要打包的文件和目录
+    exclude('BuildConfig.class','R.class')
+    //去掉$R开头的
+    exclude{it.name.startsWith('R$');}
+}

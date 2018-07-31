@@ -33,6 +33,7 @@ public class NewsListPresenter implements IBasePresenter {
 
     @Override
     public void getData() {
+        mPage = 0;
         RetrofitService.getNewsList(mNewsId, mPage)
                 .doOnSubscribe(new Action0() {
                     @Override

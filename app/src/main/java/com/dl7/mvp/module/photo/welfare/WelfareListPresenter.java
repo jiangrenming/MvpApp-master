@@ -34,6 +34,7 @@ public class WelfareListPresenter implements IBasePresenter {
 
     @Override
     public void getData() {
+        mPage=1;
         RetrofitService.getWelfarePhoto(mPage)
                 .doOnSubscribe(new Action0() {
                     @Override
